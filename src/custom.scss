@@ -1,3 +1,37 @@
 @import "../node_modules/normalize.css/normalize.css";
 @import "../node_modules/boilerplate-styles/styles/boilerplate.scss";
 
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+
+
+
+#profiles {
+    position: absolute;
+    top: 0px;
+    right: 10%;
+    transform:translateX(-50%);
+    display: flex;
+
+    a {
+        color: $greyish-white;
+        padding: 2px 5px;
+        background: $light-black;
+        margin: 0;
+        border: 0;
+
+        &:hover {
+            background: $orange;
+            text-decoration: none;
+        }
+    }
+
+    #blackmesa-logo {
+        margin-left: 2px;
+        height: 12px;
+        vertical-align: baseline;
+    }
+}
