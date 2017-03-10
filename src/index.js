@@ -4,17 +4,31 @@ import './custom.scss';
 import $ from "jquery";
 window.$ = window.jQuery = $;  // make jQuery globally available
 
-const channels = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+const channels = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"];
+
+let cachedData;
 
 $(() => {
-
-    // setupClickHandlers();
+    setupNameFilter();
+    setupStatusFilter();
     getData().then((data) => {
+        cachedData = data;
         displayData(data);
     });
-
-
 });
+
+
+function setupNameFilter() {
+    $("#name-filter input").on("change keyup paste",() => {
+        displayData(cachedData);
+    })
+}
+
+function setupStatusFilter() {
+    $("#status-filter input[name=status-filter-radio]").change(() => {
+        displayData(cachedData);
+    })
+}
 
 
 function getData() {
@@ -35,6 +49,7 @@ function getData() {
         deferredCalls.push(userCall);
 
         let streamCall = $.get(baseUrl + "streams/" + channel, function () { }, "jsonp").then((result) => {
+            
             if (result.stream) { // streamer is online
                 data[channel].status = "online";
             }
@@ -57,20 +72,27 @@ function getData() {
 
 function displayData(data) {
 
-    console.log(data);
+    $("#channels").empty();
 
     let nameFilter = $("#name-input").val();
     let statusFilter = $("#status-filter input[name=status-filter-radio]:checked").val();
 
-    console.log(statusFilter);
-
-    Object.values(data).filter((obj) => {
-        if (obj.status === statusFilter || statusFilter === "all")
+    Object.values(data).filter((channel) => {
+        if ((channel.status === statusFilter || statusFilter === "all") && 
+            ((!nameFilter) || (nameFilter && channel.displayName.match(new RegExp(nameFilter, "i")))))
             return true;
         else
             return false;
-    }).forEach((obj) => {
-        console.log(obj);
+    }).forEach((channel) => {
+        displayChannel(channel)
     })
 
+}
+
+function displayChannel(channel) {
+    $("#channels").append(`
+        <div class="channel">
+            <h3>${channel.displayName}</h3>
+        </div>
+    `);
 }
