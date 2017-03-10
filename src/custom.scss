@@ -1,12 +1,71 @@
 @import "../node_modules/normalize.css/normalize.css";
 @import "../node_modules/boilerplate-styles/styles/boilerplate.scss";
 
+$twitch: #815fc0;
 
 body {
     font-family: 'Roboto Condensed', sans-serif;
+    background-image: url("./images/bg.png");
+    background-repeat: repeat;
 }
 
 
+#container {
+    max-width: 600px;
+    margin: 2em auto;
+    // text-align: center;
+
+    #twitch-header {
+        color: $light-black;
+        margin-top: 0;
+    }
+} 
+
+#filters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+#status-filter {
+
+    input {
+        position: absolute;
+        top: -20px; /* IE 8 doesn't seem to like to update radio buttons that are display:none */
+
+        &:checked + span, &:hover + span {
+            background-color: $twitch;
+            color: $greyish-white;
+        }
+    }
+
+    span {
+        background-color: $greyish-white;
+        padding: 4px 7px;
+    }
+
+
+}
+
+
+#name-filter {
+    height: 30px;
+
+    #name-button {
+        color: $greyish-white;
+        background-color: $light-black;
+        border: 0;
+
+        &:hover {
+            background-color: $twitch;
+        }
+    }
+
+    #name-input {
+        border: 0;
+    }
+}
 
 
 #profiles {
@@ -24,7 +83,7 @@ body {
         border: 0;
 
         &:hover {
-            background: $orange;
+            background: $twitch;
             text-decoration: none;
         }
     }
