@@ -7,13 +7,13 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     background-image: url("./images/bg.png");
     background-repeat: repeat;
+    height: auto;
 }
 
 
 #container {
     max-width: 600px;
     margin: 2em auto;
-    // text-align: center;
 
     #twitch-header {
         color: $light-black;
@@ -26,6 +26,7 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: baseline;
+    margin-bottom: 30px;
 }
 
 #status-filter {
@@ -41,6 +42,7 @@ body {
     }
 
     span {
+        cursor: pointer;
         background-color: $greyish-white;
         padding: 4px 7px;
     }
@@ -56,6 +58,7 @@ body {
         color: $greyish-white;
         background-color: $light-black;
         border: 0;
+        padding: 3px 6px;
 
         &:hover {
             background-color: $twitch;
@@ -71,8 +74,34 @@ body {
 
 .channel {
     margin-bottom: 5px;
-    padding: 3px;
+    padding: 5px;
     background-color: $greyish-white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        height: 40px;
+        border-radius: 5px;
+    }
+
+    a {
+        color: $light-black;
+        text-decoration: none;
+    }
+
+    h3 {
+        margin: 0;
+    }
+
+    h5 {
+        margin: 0;
+    }
+
+    &:hover h3 {
+        color: $twitch;
+    }
 }
 
 

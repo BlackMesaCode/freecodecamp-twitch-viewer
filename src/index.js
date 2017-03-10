@@ -33,8 +33,8 @@ function setupStatusFilter() {
 
 function getData() {
     let baseUrl = "https://wind-bow.gomix.me/twitch-api/";
-    var data = {};
-    var deferredCalls = [];
+    let data = {};
+    let deferredCalls = [];
 
     channels.forEach((channel) => {
 
@@ -43,7 +43,7 @@ function getData() {
         let userCall = $.get(baseUrl + "users/" + channel, function () { }, "jsonp").done((result) => {
             data[channel].name = channel;
             data[channel].displayName = result.display_name;
-            data[channel].image = result.logo;
+            data[channel].logo = result.logo;
             data[channel].url = `https://www.twitch.tv/${channel}`;
         });
         deferredCalls.push(userCall);
@@ -52,6 +52,7 @@ function getData() {
             
             if (result.stream) { // streamer is online
                 data[channel].status = "online";
+                data[channel].message = result.stream.channel.status;
             }
             else {
                 data[channel].status = "offline";
@@ -90,9 +91,17 @@ function displayData(data) {
 }
 
 function displayChannel(channel) {
-    $("#channels").append(`
+    var appendedChannel = $(`
         <div class="channel">
-            <h3>${channel.displayName}</h3>
+            <div>
+                <h3>${channel.displayName}</h3>
+                <h5>${channel.message ? channel.message : ""}</h5>
+            </div>
+            <img src="${channel.logo}" alt="channel logo">
         </div>
-    `);
+    `).appendTo("#channels");
+
+    appendedChannel.click(() => {
+        window.open(channel.url, "_blank");
+    })
 }
